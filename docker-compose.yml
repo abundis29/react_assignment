@@ -1,0 +1,20 @@
+version: '3'
+services: 
+  frontend:
+    container_name: client
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: development
+    stdin_open: true
+    tty: true
+    ports:
+      - "3000:3000"
+    volumes: # データの永続化s
+      - ./:/app
+      - /app/node_modules
+    environment: # 環境変数
+      - HOST=0.0.0.0 # localhost接続をする際に必要
+      - CHOKIDAR_USEPOLLING=true # ホットリロードを可能にする
+    restart: always
+    
